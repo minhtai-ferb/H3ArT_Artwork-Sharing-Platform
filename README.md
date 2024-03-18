@@ -12,5 +12,13 @@
       - Phạm Lê Quý Anh - SE170529
     - **Project:** Artworks Sharing and Selling Platform - Social Media, E-Commerce hybrid - Consumer to Consumer
     - **Techs:** RestfulAPI - Ajax - SQL Sever - Bootstrap5 - JavaScript - .NET 8 with C#
-    - **Technology:** Stripe Payment Integrations - Google and Facebook Authentication/Login - Send mail with Google - SweetAlerts2
+    - **Technology:**
+      - Stripe: Payment processing interface for secure transactions.
+      - Facebook: Integration for social media authentication.
+      - Google: Integration for authentication.
+      - Disqus: Integration of commenting system on blogs or artworks.
+      - Datatables: Integration for enhanced data presentation and manipulation.
+      - Toastr: Integration for display notifications or alerts to users.
     - **Structure:** Using ASP.NET Core MVC (.NET 8) Structure 
+  - ### Main process report
+    - **Link:**  
