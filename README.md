@@ -24,3 +24,5 @@
     - **Structure:** Using ASP.NET Core MVC (.NET 8) Structure 
   - ### Main process report
     - **Link:** [Main Process](Document/MAIN_PROCESS_REPORT.xlsx)
+  - ### The old repositories(Use in the coding process)
+    - **Link:** [The old repositories](https://github.com/conghung2708/H3ArTArtwork_LanthuN)
