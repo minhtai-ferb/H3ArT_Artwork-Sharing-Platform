@@ -11,7 +11,7 @@
       - Đặng Công Hưng - SE171500
       - Phạm Lê Quý Anh - SE170529
     - **Project:** Artworks Sharing and Selling Platform - Social Media, E-Commerce hybrid - Consumer to Consumer
-    - **Techs:** RestfulAPI - Ajax - SQL Sever - Bootstrap5 - JavaScript - .NET 8 with C#
+    - **Techs:** RestfulAPI - Ajax - SQL Sever - Bootstrap5 - JavaScript - HTML/CSS - .NET 8 with C#
     - **Technology:**
       - Stripe: Payment processing interface for secure transactions.
       - Facebook: Integration for social media authentication.
@@ -19,6 +19,8 @@
       - Disqus: Integration of commenting system on blogs or artworks.
       - Datatables: Integration for enhanced data presentation and manipulation.
       - Toastr: Integration for display notifications or alerts to users.
+      - SweetAlerts2: Integration for showing custom alert messages/dialogs.
+      - TinyMCE: Integration for a rich text editor.
     - **Structure:** Using ASP.NET Core MVC (.NET 8) Structure 
   - ### Main process report
-    - **Link:** ![Main Process](Document)
+    - **Link:** [Main Process](Document/MAIN_PROCESS_REPORT.xlsx)
