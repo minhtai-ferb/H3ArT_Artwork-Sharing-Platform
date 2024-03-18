@@ -1,0 +1,60 @@
+﻿@{
+    Layout = null;
+}
+@using H3ArT.Models.Models
+@using H3ArT.Models.ViewModels
+@using System.Globalization
+@model IEnumerable<Package>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/pricing-plan.css">
+</head>
+<body class="bg-dark">
+
+    <main>
+        <!-- Back to Home button -->
+        <a asp-area="Customer" asp-controller="Home" asp-action="Index" type="button" class="btn pricing-plan-home-btn btn-primary mt-3 text-dark">
+            <i class="bi bi-house"></i>
+            Home
+        </a>
+        <div class="container">
+            <h5 class="text-center pricing-table-subtitle text-light">PRICING PLAN</h5>
+            <h1 class="text-center pricing-table-title  text-light">Pricing Table</h1>
+            <div class="row justify-content-center">
+                @foreach (var package in Model)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card pricing-card pricing-card-highlighted  pricing-plan-pro">
+                            <div class="card-body">
+                                <i class="mdi mdi-trophy pricing-plan-icon"></i>
+                                <p class="pricing-plan-title">@package.PackageName</p>
+                                <h3 class="pricing-plan-cost ml-auto">@package.Price.ToString("C", CultureInfo.CreateSpecificCulture("en-US"))</h3>
+                                <ul class="pricing-plan-features">
+                                    <li>@Html.Raw(package.Description)</li>
+                                </ul>
+                                <form method="get" asp-action="SummaryPackage">
+                                    <input type="hidden" name="packageId" value="@package.PackageId" />
+                                    <button type="submit" class="btn pricing-plan-purchase-btn">Purchase</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>

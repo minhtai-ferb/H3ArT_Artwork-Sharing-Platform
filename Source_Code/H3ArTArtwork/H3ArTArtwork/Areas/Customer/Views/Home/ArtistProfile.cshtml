@@ -1,0 +1,160 @@
+﻿﻿@using H3ArT.Models.ViewModels
+@model UserVM
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Author - Pintereso Bootstrap Template</title>
+    <script type="text/javascript">(function () { var css = document.createElement('link'); css.href = 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })();</script>
+
+    <link href="~/css/app.css" rel="stylesheet" />
+    <link href="~/css/theme.css" rel="stylesheet" />
+</head>
+
+<body>
+
+
+
+
+    <div class="jumbotron border-round-0 min-50vh" style="background-image:url(https://images.unsplash.com/photo-1522204657746-fccce0824cfd?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=84b5e9bea51f72c63862a0544f76e0a3&auto=format&fit=crop&w=1500&q=80);">
+    </div>
+    <div class="container mb-4 position-relative">
+        @{
+            string avatarImageSrc = string.IsNullOrEmpty(Model.Artist.AvatarImage) ? "~/image/defaultava/default.jpg" : Model.Artist.AvatarImage;
+        }
+
+        <img src="@Url.Content(avatarImageSrc)" class="mt-neg100 mb-4 rounded-circle" width="128" alt="avatar">
+
+
+        <h1 class="font-weight-bold title">@Model.Artist.FullName</h1>
+        <p>
+            I love Art, Web Design, Photography, Design, Illustration
+        </p>
+        <div class="position-absolute top-0 end-0 pe-2">
+            <!-- Button trigger modal -->
+            <a data-bs-toggle="modal" data-bs-target="#centeredModal">
+                <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> Report
+            </a>
+            <!-- Modal -->
+            <div class="modal fade" id="centeredModal" tabindex="-1" aria-labelledby="centeredModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="centeredModalLabel">Report</h3>
+                            <button type="button" class="btn-close" style="margin-block:auto" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form id="centeredRadioForm" meathod="post" asp-action="ReportArtist">
+                            <div class="modal-body" style="margin: 0 10px 0 10px">
+                                <div class="mb-3 form-check">
+                                    <input type="radio" class="form-check-input" id="spam" name="reportReason" value="Spam">
+                                    <label class="form-check-label" for="spam">Spam</label>
+                                    <div class="text-muted">Misleading or repetitive posts</div>
+                                </div>
+
+                                <!-- Nudity or Pornography Option -->
+                                <div class="mb-3 form-check">
+                                    <input type="radio" class="form-check-input" id="nudity" name="reportReason" value="Nudity, pornography or sexualized content">
+                                    <label class="form-check-label" for="nudity">Nudity, pornography or sexualized content</label>
+                                    <div class="text-muted">Sexually explicit content involving adults or nudity, non-nudity or intentional misuse involving minors</div>
+                                </div>
+
+                                <!-- Self-harm Option -->
+                                <div class="mb-3 form-check">
+                                    <input type="radio" class="form-check-input" id="selfHarm" name="reportReason" value="Self-harm">
+                                    <label class="form-check-label" for="selfHarm">Self-harm</label>
+                                    <div class="text-muted">Eating disorders, cutting, suicide</div>
+                                </div>
+
+                                <!-- Misinformation Option -->
+                                <div class="mb-3 form-check">
+                                    <input type="radio" class="form-check-input" id="misinformation" name="reportReason" value="Misinformation">
+                                    <label class="form-check-label" for="misinformation">Misinformation</label>
+                                    <div class="text-muted">Health, climate, voting misinformation or conspiracies</div>
+                                </div>
+
+                                <!-- Hateful Activities Option -->
+                                <div class="mb-3 form-check">
+                                    <input type="radio" class="form-check-input" id="hatefulActivities" name="reportReason" value="Hateful activities">
+                                    <label class="form-check-label" for="hatefulActivities">Hateful activities</label>
+                                    <div class="text-muted">Prejudice, stereotypes, white supremacy, slurs</div>
+                                </div>
+
+                                <!-- Dangerous Goods Option -->
+                                <div class="mb-3 form-check">
+                                    <input type="radio" class="form-check-input" id="dangerousGoods" name="reportReason" value="Dangerous goods">
+                                    <label class="form-check-label" for="dangerousGoods">Dangerous goods</label>
+                                    <div class="text-muted">Drugs, weapons, regulated products</div>
+                                </div>
+
+                                <!-- Harassment or Criticism Option -->
+                                <div class="mb-3 form-check">
+                                    <input type="radio" class="form-check-input" id="harassmentCriticism" name="reportReason" value="Harassment or criticism">
+                                    <label class="form-check-label" for="harassmentCriticism">Harassment or criticism</label>
+                                    <div class="text-muted">Insults, threats, personally identifiable info</div>
+                                </div>
+
+                                <!-- Graphic Violence Option -->
+                                <div class="mb-3 form-check">
+                                    <input type="radio" class="form-check-input" id="graphicViolence" name="reportReason" value="Graphic violence">
+                                    <label class="form-check-label" for="graphicViolence">Graphic violence</label>
+                                    <div class="text-muted">Violent images or promotion of violence</div>
+                                </div>
+
+                                <!-- Intellectual Property Option -->
+                                <div class="mb-3 form-check">
+                                    <input type="radio" class="form-check-input" id="intellectualProperty" name="reportReason" value="My intellectual property">
+                                    <label class="form-check-label" for="intellectualProperty">My intellectual property</label>
+                                    <div class="text-muted">Copyright or trademark infringement</div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button asp-action="ReportArtist" asp-route-artistID="@Model.Artist.Id" type="submit" class="btn btn-primary" form="centeredRadioForm">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <a asp-action="ViewBlog" asp-route-artistID="@Model.Artist.Id" style="color: #00a67d;">
+                    <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> View my blog
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid mb-5">
+        <div class="row">
+            <div class="card-columns">
+
+                @foreach (var artwork in Model.ArtworkList)
+                {
+
+                    <div class="card card-pin">
+                        <img class="card-img" src="@artwork.ImageUrl" alt="Card image">
+                        <div class="overlay">
+                            <h2 class="card-title title">@artwork.Title</h2>
+                            <div class="more">
+                                @if (!artwork.IsBought)
+                                {
+                                    <a asp-action="Details" asp-route-artworkId="@artwork.ArtworkId">
+                                        <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> More
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/app.js"></script>
+    <script src="~/js/theme.js"></script>
+
+</body>
+
+</html>

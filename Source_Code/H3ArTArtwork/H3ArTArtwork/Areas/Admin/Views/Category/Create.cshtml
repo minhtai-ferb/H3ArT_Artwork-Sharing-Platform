@@ -1,0 +1,57 @@
+﻿<!-- Because you with do sth with the product itself
+    so you have to call it
+-->
+@using H3ArT.Models.Models
+@model Category
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Create category</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <form method="post" class="row">
+            <div class="border p-3">
+                <!--1)Use this to list all the validation
+                    2)If you use "ModelOnly", it will not print the error of properties
+                    just print the error of a model in productController
+                    3)If you use "None", no msg will be printed
+                -->
+                <div asp-validation-summary="ModelOnly"></div>
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="CategoryName" class="form-control border-0 shadow" />
+                    <label class="p-0" asp-for="CategoryName" class="ms-2"></label>
+                    <span asp-validation-for="CategoryName" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <!-- use asp-for = "The name of property" will
+                        exactly access to the acongmodel property
+                    -->
+                    <input asp-for="DisplayOrder" class="form-control border-0 shadow" />
+                    <label class="p-0" asp-for="DisplayOrder" class="ms-2"></label>
+                    <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+
+                </div>
+                <div class="row">
+                    <div class="col-6 col-md-3">
+                        <button type="submit" class="btn btn-outline-primary border form-control">Create</button>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a asp-controller="Category" asp-action="Index" class="btn btn-outline-primary form-control">Back to list</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!--Script nay giup viec validation duoc hien len ngay khi nguoi dung nhap sai-->
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

@@ -1,0 +1,116 @@
+﻿﻿@using H3ArT.Models.ViewModels
+@model ArtworkVM
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <!-- Note this dynamic -->
+                <h2 class="text-white py-2">@(Model.Artwork.ArtworkId != 0 ? "Update" : "Create") Artwork</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <form method="post" class="row" enctype="multipart/form-data">
+            <input asp-for="Artwork.ArtworkId" hidden />
+            <input asp-for="Artwork.ImageUrl" hidden />
+            <input asp-for="Artwork.ArtistId" hidden />
+            <input asp-for="@Model.Artwork.ApplicationUser" hidden />
+
+
+
+
+            <div class="row">
+                <div class="col-10">
+                    <div class="border p-3">
+                        <div class="form-floating py-2 col-12">
+                            <!-- 1) Use this to list all the validation
+                                 2) If you use "ModelOnly", it will not print the error of properties
+                                    just print the error of a model in productController
+                                 3) If you use "None", no msg will be printed
+                            -->
+                            <div asp-validation-summary="ModelOnly"></div>
+                        </div>
+
+                        <!-- Title -->
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Artwork.Title" class="form-control border-0 shadow" />
+                            <label class="p-0 ms-2" asp-for="Artwork.Title"></label>
+                            <span asp-validation-for="Artwork.Title" class="text-danger"></span>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="form-floating py-2 col-12">
+                            <textarea asp-for="Artwork.Description" class="form-control border-0 shadow"></textarea>
+                            <label class="p-0 ms-2" asp-for="Artwork.Description"></label>
+                            <span asp-validation-for="Artwork.Description" class="text-danger"></span>
+                        </div>
+
+                        <!-- Artist Name -->
+                        <div class="form-floating py-2 col-12">
+                            <input disabled asp-for="Artwork.ApplicationUser.FullName" class="form-control border-0 shadow" />
+                            <label class="p-0 ms-2" asp-for="Artwork.ApplicationUser.FullName"></label>
+                            <span asp-validation-for="Artwork.ApplicationUser.FullName" class="text-danger"></span>
+                        </div>
+
+                        <!-- Price -->
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Artwork.Price" class="form-control border-0 shadow" />
+                            <label class="p-0 ms-2" asp-for="Artwork.Price"></label>
+                            <span asp-validation-for="Artwork.Price" class="text-danger"></span>
+                        </div>
+
+                        <!-- Category -->
+                        <div class="form-floating py-2 col-12">
+                            <select asp-for="Artwork.CategoryId" asp-items="@Model.CategoryList" class="form-select border-0 shadow">
+                                <option disabled selected>--Select Category</option>
+                            </select>
+                            <label class="p-0 ms-2" asp-for="Artwork.CategoryId"></label>
+                            <span asp-validation-for="Artwork.CategoryId" class="text-danger"></span>
+                        </div>
+
+                        <!-- Image URL -->
+                        <div class="form-floating py-2 col-12">
+                            <input type="file" name="file" class="form-control border-0 shadow" />
+                            <label class="p-0 ms-2" asp-for="Artwork.ImageUrl"></label>
+                        </div>
+
+                        <div class="form-check form-switch py-2 col-12">
+                            <input type="checkbox" class="form-check-input" asp-for="Artwork.IsPremium" />
+                            <label class="form-check-label ms-2" asp-for="Artwork.IsPremium">Premium</label>
+                        </div>
+                        <!-- Buttons -->
+                        <div class="row">
+                            <div class="col-6 col-md-3">
+                                <input type="submit" value="@(Model.Artwork.ArtworkId != 0 ? "Update" : "Create")" class="btn btn-outline-primary border form-control" />
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <a asp-controller="Artwork" asp-action="Index" class="btn btn-outline-primary form-control">Back to list</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <img src="@Model.Artwork.ImageUrl" width="100%"
+                         style="border-radius:5px; border:1px solid #bbb9b9" />
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+<!-- Script nay giup viec validation duoc hien len ngay khi nguoi dung nhap sai -->
+@section Scripts {
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons searchreplace table visualblocks wordcount linkchecker',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        });
+    </script>
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

@@ -1,0 +1,14 @@
+﻿@page
+@model ConfirmEmailModel
+@{
+    ViewData["Title"] = "Confirm email";
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="d-flex align-content-center justify-content-center" style="height:65vh">
+    <div class="text-center m-auto">
+        <h1>@ViewData["Title"]: <p>@Model.User.Identity.Name</p></h1>
+        <p>@Model.StatusMessage</p>
+        <a href="/"><p class="text-black font-weight-bold">Go to home page. Click here!!!</p></a>
+    </div>
+</div>

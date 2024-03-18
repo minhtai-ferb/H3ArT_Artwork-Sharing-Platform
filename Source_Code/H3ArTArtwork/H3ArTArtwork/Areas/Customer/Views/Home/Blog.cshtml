@@ -1,0 +1,158 @@
+﻿@using System.Globalization
+@using H3ArT.Models.Models
+@model IEnumerable<Blog>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Art.Design Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font awesome icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+    <link href="~/css/blog.css" rel="stylesheet" />
+    <style>
+        footer{
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <div class="container">
+            <h1 class="banner-title">
+                <span>H3ArT.</span> Blog
+            </h1>
+            <p>everything that you want to know about art & design</p>           
+        </div>
+    </div>
+
+
+    <!-- design -->
+    <section class="design" id="design">
+        <div class="container">
+            <div class="title">
+                <h2>Recent Arts & Designs</h2>
+                <p>recent arts & designs on the blog</p>
+            </div>
+
+            <div class="design-content">
+                <!-- item -->
+                <div class="design-item">
+                    <div class="design-img">
+                        <img src="~/image/blog/art-design-1.jpg" alt="">
+
+                        <span><i class="far fa-heart"></i> 22</span>
+                        <span>Art & Design</span>
+                    </div>
+                   
+                </div>
+                <!-- end of item -->
+                <!-- item -->
+                <div class="design-item">
+                    <div class="design-img">
+
+                        <img src="~/image/blog/art-design-2.jpg" alt="" />
+                        <span><i class="far fa-heart"></i> 22</span>
+                        <span>Art & Design</span>
+                    </div>
+
+                </div>
+                <!-- end of item -->
+                <!-- item -->
+                <div class="design-item">
+                    <div class="design-img">
+                        <img src="~/image/blog/art-design-3.jpg" alt="" />
+                        <span><i class="far fa-heart"></i> 22</span>
+                        <span>Art & Design</span>
+                    </div>
+                 
+                </div>
+                <!-- end of item -->
+                <!-- item -->
+                <div class="design-item">
+                    <div class="design-img">
+                        <img src="~/image/blog/art-design-4.jpg" alt="" />
+
+                        <span><i class="far fa-heart"></i> 22</span>
+                        <span>Art & Design</span>
+                    </div>
+                   
+                </div>
+                <!-- end of item -->
+                <!-- item -->
+                <div class="design-item">
+                    <div class="design-img">
+                        <img src="~/image/blog/art-design-5.jpg" alt="" />
+                        <span><i class="far fa-heart"></i> 22</span>
+                        <span>Art & Design</span>
+                    </div>
+
+                </div>
+                <!-- end of item -->
+                <!-- item -->
+                <div class="design-item">
+                    <div class="design-img">
+                        <img src="~/image/blog/art-design-6.jpg" alt="" />
+                        <span><i class="far fa-heart"></i> 22</span>
+                        <span>Art & Design</span>
+                    </div>
+                    
+                </div>
+                <!-- end of item -->
+            </div>
+        </div>
+    </section>
+    <!-- end of design -->
+    <!-- blog -->
+    <section class="blog" id="blog">
+        <div class="container">
+            <div class="title">
+                <h2>Latest Blog</h2>
+                <p>recent blogs about art & design</p>
+            </div>
+            <div class="blog-content">
+                <!-- item -->
+                @{
+                    var sortedBlogs = Model.OrderByDescending(blog => blog.CreatedAt);
+                }
+
+                @foreach (var blog in sortedBlogs)
+                {
+                    <div class="blog-item">
+                        <div class="blog-img" style="width: 382px; height: 200px;">
+                            <img src="@blog.ImageUrl" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="blog-text">
+                            <span>@blog.CreatedAt</span> <!-- date -->
+                            <h2>@blog.Title</h2> <!-- title -->
+                            <p>@Html.Raw(@blog.Description.Substring(0, 100))...</p>
+                            <a asp-action="Blog_Details" asp-route-blogID="@blog.BlogId">More</a>
+                        </div>
+                    </div>
+                }
+                <!-- end of item -->
+
+            </div>
+        </div>
+    </section>
+    <!-- end of blog -->
+    <!-- about -->
+  
+    <!-- end of about -->
+    <!-- footer -->
+    <footer>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-pinterest"></i></a>
+        </div>
+        <span>Art.Design Blog Page</span>
+    </footer>
+    <!-- end of footer -->
+</body>
+</html>

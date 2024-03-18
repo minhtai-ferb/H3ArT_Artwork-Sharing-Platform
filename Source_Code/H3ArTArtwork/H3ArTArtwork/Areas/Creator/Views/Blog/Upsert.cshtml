@@ -1,0 +1,92 @@
+﻿@using H3ArT.Models.Models
+@model Blog
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <!-- Note this dynamic -->
+                <h2 class="text-white py-2">@(Model.BlogId != 0 ? "Update" : "Create") Blog</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <form method="post" class="row" enctype="multipart/form-data">
+            <input asp-for="BlogId" hidden />
+            <input asp-for="ImageUrl" hidden />
+            <input asp-for="CreatorId" hidden />
+            <input asp-for="@Model.ApplicationUser" hidden />
+
+            <div class="row">
+                <div class="col-10">
+                    <div class="border p-3">
+                        <div class="form-floating py-2 col-12">
+                            <!-- 1) Use this to list all the validation
+                                 2) If you use "ModelOnly", it will not print the error of properties
+                                    just print the error of a model in productController
+                                 3) If you use "None", no msg will be printed
+                            -->
+                            <div asp-validation-summary="ModelOnly"></div>
+                        </div>
+
+                        <!-- Title -->
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Title" class="form-control border-0 shadow" />
+                            <label class="p-0 ms-2" asp-for="Title"></label>
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="form-floating py-2 col-12">
+                            <textarea asp-for="Description" class="form-control border-0 shadow"></textarea>
+                            <label class="p-0 ms-2" asp-for="Description"></label>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <!-- Artist Name -->
+                        <div class="form-floating py-2 col-12">
+                            <input disabled asp-for="@Model.ApplicationUser.FullName" class="form-control border-0 shadow" />
+                            <label class="p-0 ms-2" asp-for="@Model.ApplicationUser.FullName"></label>
+                            <span asp-validation-for="@Model.ApplicationUser.FullName" class="text-danger"></span>
+                        </div>
+
+                        <!-- Image URL -->
+                        <div class="form-floating py-2 col-12">
+                            <input type="file" name="file" class="form-control border-0 shadow" />
+                            <label class="p-0 ms-2" asp-for="ImageUrl"></label>
+                            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="row">
+                            <div class="col-6 col-md-3">
+                                <input type="submit" value="@(Model.BlogId != 0 ? "Update" : "Create")" class="btn btn-outline-primary border form-control" />
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <a asp-controller="Blog" asp-action="Index" class="btn btn-outline-primary form-control">Back to list</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <img src="@Model.ImageUrl" width="100%"
+                         style="border-radius: 5px; border: 1px solid #bbb9b9" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Script nay giup viec validation duoc hien len ngay khi nguoi dung nhap sai -->
+@section Scripts {
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons searchreplace table visualblocks wordcount linkchecker',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        });
+    </script>
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

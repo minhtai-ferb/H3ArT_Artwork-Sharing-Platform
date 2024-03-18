@@ -1,0 +1,235 @@
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - H3ArTArtwork</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/H3ArTArtwork.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <script type="text/javascript">(function () { var css = document.createElement('link'); css.href = 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })();</script>
+    @* <link href="~/css/app.css" rel="stylesheet" /> *@
+    <link href="~/css/theme.css" rel="stylesheet" />
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        #container-main {
+            min-height: 100%;
+            position: relative;
+        }
+
+        #header-main {
+        }
+
+        #body-main {
+            padding-bottom: 60px; /* Height of the footer */
+        }
+
+        #footer-main {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px; /* Height of the footer */
+        }
+
+    </style>
+</head>
+
+<body style="padding-top: 0px;">
+    <div id="container-main">
+        <div id="header-main">
+            <header>
+                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+                    <div class="container-fluid">
+                        @* <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">H3ArTArtwork</a> *@
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/image/login/BlackLogo - Copy.png" width="150vh" alt="H3ArTArtwork" /></a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                            <ul class="navbar-nav me-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                </li>
+                                @if (User.IsInRole(SD.Role_Creator))
+                                {
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: black;">
+                                            Content Management
+                                        </a>
+                                        <ul class="dropdown-menu">
+
+                                            <li class="nav-item">
+                                                <a class="dropdown-item" asp-area="Creator" asp-controller="Artwork" asp-action="Index">Artwork</a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="dropdown-item" asp-area="Creator" asp-controller="Upgrade" asp-action="Index">Upgrade</a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="dropdown-item" asp-area="Creator" asp-controller="Blog" asp-action="Index">Blog</a>
+                                            </li>
+
+                                            @* Đây là nơi để test chức năng Package
+                                        khi nhấn vào sẽ reset số lượng artwork được đăng về 0 *@
+                                            <li class="nav-item">
+                                                <a class="dropdown-item" asp-area="Creator" asp-controller="Upgrade" asp-action="Reset">Reset -- chức năng này là TEST</a>
+                                            </li>
+                                            @* Đây là nơi để test chức năng Package
+                                        khi nhấn vào sẽ reset số lượng artwork được đăng về 0 *@
+
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        </ul>
+                                    </li>
+
+                                }
+                                @if (!User.IsInRole(SD.Role_Moderator))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="Admin" asp-controller="Order" asp-action="Index">Order</a>
+                                    </li>
+                                }
+                                @if (User.IsInRole(SD.Role_Moderator))
+                                {
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: black;">
+                                            Report
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li class="nav-item">
+                                                <a class="dropdown-item" asp-area="Moderator" asp-controller="Report" asp-action="Index_Creator">Creator</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="dropdown-item" asp-area="Moderator" asp-controller="Report" asp-action="Index_Blog">Blog</a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="dropdown-item" asp-area="Moderator" asp-controller="Report" asp-action="Index_Artwork">Artwork</a>
+                                            </li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        </ul>
+                                    </li>
+                                }
+
+                                @if (User.IsInRole(SD.Role_Admin))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="Admin" asp-controller="Package" asp-action="Index">Manage Package</a>
+                                    </li>
+
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: black;">
+                                            Content Management
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li class="nav-item">
+                                                <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Create a User</a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Index">Manage Users</a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="dropdown-item" asp-area="Creator" asp-controller="Artwork" asp-action="Index">Manage Artwork</a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="dropdown-item" asp-area="Creator" asp-controller="Blog" asp-action="Index">Manage Blog</a>
+                                            </li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        </ul>
+                                    </li>
+                                }
+                                @if (!User.IsInRole(SD.Role_Admin))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="Customer" asp-controller="Home" asp-action="Blog">Blog</a>
+                                    </li>
+                                }
+
+                                @if (!User.IsInRole(SD.Role_Admin) && !User.IsInRole(SD.Role_Moderator))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index" style="color: black;">
+                                            @await Component.InvokeAsync("ShoppingCart")
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                            <partial name="_LoginPartial" />
+                        </div>
+                    </div>
+                </nav>
+
+            </header>
+        </div>
+        <div id="body-main">
+            <div class=" " style="">
+                <main role="main" class="">
+                    <partial name="_Notification" />
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+        <div class="footer-main" id="footer-main">
+            <!-- Footer -->
+            <footer class="footer" id="footer" style="bottom: 0, position: absolute;">
+                <div class="pt-5 pb-5 text-center bg-white border-top box-shadow mt-3">
+                    <div class="container">
+                        <div class="socials-media">
+                            <ul class="list-unstyled">
+                                <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-facebook"></i></a></li>
+                                <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-twitter"></i></a></li>
+                                <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-instagram"></i></a></li>
+                                <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-google-plus"></i></a></li>
+                                <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-behance"></i></a></li>
+                                <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-dribbble"></i></a></li>
+                            </ul>
+                        </div>
+                        <!--
+                          All the links in the footer should remain intact.
+                          You may remove the links only if you donate:
+                          https://www.wowthemes.net/freebies-license/
+                        -->
+                        <p>
+                            ©  <span class="credits font-weight-bold">
+                                <a target="_blank" class="text-dark" href="https://www.wowthemes.net/pintereso-free-html-bootstrap-template/"><u>Pintereso Bootstrap HTML Template</u> by WowThemes.net.</a>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="//cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="https://cdn.tiny.cloud/1/k8u7g6xo882rqvrqy150cuio2mdchpli6vqjaf8nxjadticy/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

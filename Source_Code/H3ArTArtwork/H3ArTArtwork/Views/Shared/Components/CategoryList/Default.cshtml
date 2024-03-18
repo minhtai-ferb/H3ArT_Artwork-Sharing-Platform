@@ -1,0 +1,31 @@
+﻿@using H3ArT.Models.Models
+@model IEnumerable<Category>
+
+<ul class="navbar-nav">
+    @foreach (var category in Model.Take(4))
+    {
+        <li class="nav-item">
+            <!-- Check if the current category is the active category -->
+            @{
+                string activeClass = "";
+                if (ViewContext.RouteData.Values["categoryId"] != null && (int)ViewContext.RouteData.Values["categoryId"] == category.CategoryId)
+                {
+                    activeClass = "active";
+                }
+            }
+            <a asp-controller="Home" asp-action="Index" asp-route-categoryId="@category.CategoryId" class="dropdown-item @activeClass">@category.CategoryName</a>
+        </li>
+    }
+    @if (Model.Count() > 4)
+    {
+        <li class="nav-item dropdown">
+            <a class="dropdown-toggle dropdown-item" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</a>
+            <div class="dropdown-menu shadow-lg" aria-labelledby="dropdown01">
+                @foreach (var category in Model.Skip(4))
+                {
+                    <a asp-controller="Home" asp-action="Index" asp-route-categoryId="@category.CategoryId" class="dropdown-item">@category.CategoryName</a>
+                }
+            </div>
+        </li>
+    }
+</ul>
