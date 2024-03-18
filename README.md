@@ -21,4 +21,4 @@
       - Toastr: Integration for display notifications or alerts to users.
     - **Structure:** Using ASP.NET Core MVC (.NET 8) Structure 
   - ### Main process report
-    - **Link:**  
+    - **Link:** ![Main Process](Document)
