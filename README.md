@@ -3,7 +3,7 @@
     ![H3ArT Logo](Source_Code/H3ArTArtwork/H3ArTArtwork/wwwroot/image/login/MergedImages.png)
   - ### Project Detail:
     - **Class:** SWP391-NET1706-SP2024
-    - **Project Supervisor:** Nguyen Thi Cam - HuongNTC2
+    - **Project Supervisor:** Nguyen Thi Cam Huong - HuongNTC2
     - **Topic:** Artwork Sharing Platform (H3ArT)
     - **Authors:**
       - Nguyễn Hữu Minh Tài - SE170053
